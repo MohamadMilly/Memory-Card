@@ -1,0 +1,43 @@
+:root {
+  --card-background: #71a8e270;
+  --card-text-color: #ffde00;
+  --card-text-shadow-color: #0b437e;
+  --card-font-size: 32px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--card-background);
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.card > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: var(--card-font-size);
+  text-shadow: 3px 3px var(--card-text-shadow-color);
+  color: var(--card-text-color);
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.card > img {
+  transition: transform 250ms ease-in-out;
+}
+.card:hover > img {
+  transform: scale(1.2);
+}
+.card:hover > span {
+  opacity: 1;
+}
