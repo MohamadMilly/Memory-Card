@@ -4,11 +4,13 @@ function PokemonCard({ pokemonName, onClickTwice, increaseScore }) {
   const [pokemon, setPokemon] = useState(null);
   const [hasClicked, setHasClicked] = useState(false);
   useEffect(() => {
+    let ignore = false;
     async function fetchPokemon() {
       try {
         const res = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
         );
+        if (ignore) return;
         const data = await res.json();
         setPokemon({
           name: data.name,
@@ -19,6 +21,7 @@ function PokemonCard({ pokemonName, onClickTwice, increaseScore }) {
       }
     }
     fetchPokemon();
+    return () => (ignore = true);
   }, [pokemonName]);
   const handleCardClick = () => {
     if (!hasClicked) {
