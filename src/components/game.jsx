@@ -13,18 +13,21 @@ function Game() {
   const [currentCharacters, setCurrentCharacters] = useState(pokemonCharacters);
   const [gameId, setGameId] = useState(0);
   const [count, setCount] = useState(0);
+  const hasWon = score === currentCharacters.length;
   useEffect(() => {
     const timer = setInterval(() => {
-      if (!isGameOver) {
+      if (!isGameOver && !hasWon) {
         setCount((count) => count + 1);
       }
     }, 1000);
     return () => clearInterval(timer);
   }, [isGameOver]);
+
   const handleTwiceClick = () => {
     setIsGameOver(true);
     setBestScore((prev) => (prev > score ? prev : score));
   };
+
   const handleCardClick = () => {
     if (isGameOver) {
       return;
@@ -32,12 +35,14 @@ function Game() {
     setScore(score + 1);
     setCurrentCharacters(randomiseArray(currentCharacters));
   };
+
   const handleRetryGame = () => {
     setGameId(gameId + 1);
     setIsGameOver(false);
     setScore(0);
     setCount(0);
   };
+
   return (
     <div className="game-container">
       <ScoreBoard score={score} bestScore={bestScore} />
@@ -48,7 +53,7 @@ function Game() {
         key={`cardsSection${gameId}`}
       />
       {isGameOver && <GameOver makeRetry={handleRetryGame} time={count} />}
-      {!isGameOver && score === currentCharacters.length && (
+      {hasWon && (
         <WinDialog
           triggerNewGame={() => {
             handleRetryGame();
