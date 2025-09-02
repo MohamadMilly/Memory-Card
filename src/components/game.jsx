@@ -36,6 +36,7 @@ function Game() {
     setGameId(gameId + 1);
     setIsGameOver(false);
     setScore(0);
+    setCount(0);
   };
   return (
     <div className="game-container">
